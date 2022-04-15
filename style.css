@@ -13,6 +13,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: hsl(0, 0%, 10%);
+  overflow: hidden;
 }
 
 .game-wrapper {

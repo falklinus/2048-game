@@ -24,19 +24,19 @@ function handleInput(dir) {
   switch (dir) {
     case 'up':
       moved = grid.moveUp()
-      controller.stop()
+      // controller.stop()
       break
     case 'left':
       moved = grid.moveLeft()
-      controller.stop()
+      // controller.stop()
       break
     case 'down':
       moved = grid.moveDown()
-      controller.stop()
+      // controller.stop()
       break
     case 'right':
       moved = grid.moveRight()
-      controller.stop()
+      // controller.stop()
       break
   }
 
@@ -44,9 +44,10 @@ function handleInput(dir) {
     const appended = grid.appendToEmpty()
     if (grid.checkGameOver()) {
       alert('GAME OVER')
+      controller.stop()
     } else {
       grid.cells.forEach((cell) => (cell.merged = false))
-      controller.start()
+      // controller.start()
     }
   }
 }
