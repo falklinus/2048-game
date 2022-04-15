@@ -25,12 +25,13 @@ class Controller {
   }
 
   start() {
+    console.log('start')
     this.swipeDetector.start()
-    window.addEventListener('keydown', ({ key }) => this.handleKeyDown(key))
-    window.addEventListener('keyup', ({ key }) => this.handleKeyUp(key))
+    window.addEventListener('keydown', this.handleKeyDown)
+    window.addEventListener('keyup', this.handleKeyUp)
   }
 
-  handleKeyDown(key) {
+  handleKeyDown = ({ key }) => {
     if (!this.keysMap[key] || this.keyPressed[this.keysMap[key]]) {
       return
     }
@@ -38,14 +39,15 @@ class Controller {
     this.handleInput(this.keysMap[key])
   }
 
-  handleKeyUp(key) {
+  handleKeyUp = ({ key }) => {
     this.keyPressed[this.keysMap[key]] = false
   }
 
   stop() {
+    console.log('stop')
     this.swipeDetector.stop()
-    window.removeEventListener('keydown', ({ key }) => this.handleKeyDown(key))
-    window.removeEventListener('keyup', ({ key }) => this.handleKeyUp(key))
+    window.removeEventListener('keydown', this.handleKeyDown)
+    window.removeEventListener('keyup', this.handleKeyUp)
   }
 }
 

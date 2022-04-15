@@ -27,6 +27,9 @@ body {
 
 .game-status {
   flex: 1;
+  color: white;
+  font-size: 2rem;
+  padding: 0.5rem;
 }
 
 .game-grid {

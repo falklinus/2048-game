@@ -35,10 +35,15 @@ class Grid {
     this.cells.forEach((cell, index) => {
       if (!cell.tile) available.push(index)
     })
-    if (available.length == 0) return
-    const index = available[Math.floor(Math.random() * available.length)]
-    this.cells[index].makeTile(Math.random() < 0.5 ? 2 : 4)
-    return this.cells[index].element
+    return new Promise((resolve, reject) => {
+      if (available.length == 0) reject
+      const index = available[Math.floor(Math.random() * available.length)]
+      this.cells[index].makeTile(Math.random() < 0.5 ? 2 : 4)
+      this.cells[index].element.ontransitionend = () => {
+        console.log('bom')
+      }
+      resolve(this.cells[index].element)
+    })
   }
 
   move(cells, order) {

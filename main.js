@@ -3,10 +3,13 @@ import Grid from './Grid.js'
 
 const gameGrid = document.querySelector('[data-gameGrid]')
 const controller = new Controller(gameGrid, handleInput)
+const scoreDisplay = document.querySelector('[data-score]')
 
 const grid = new Grid({ htmlElement: gameGrid, size: 4 })
+let score = 0
 
 function startGame() {
+  scoreDisplay.textContent = score
   window.addEventListener('resize', resize)
   grid.appendToEmpty()
   grid.appendToEmpty()
@@ -17,38 +20,39 @@ function resize() {
   grid.resize()
 }
 
-function handleInput(dir) {
-  // controller.stop()
+async function handleInput(dir) {
   console.log(dir)
   let moved = false
   switch (dir) {
     case 'up':
       moved = grid.moveUp()
-      // controller.stop()
       break
     case 'left':
       moved = grid.moveLeft()
-      // controller.stop()
       break
     case 'down':
       moved = grid.moveDown()
-      // controller.stop()
       break
     case 'right':
       moved = grid.moveRight()
-      // controller.stop()
       break
   }
 
   if (moved) {
-    const appended = grid.appendToEmpty()
+    controller.stop()
+    grid.cells.forEach((cell) => {
+      if (cell.merged) score += cell.value
+      cell.merged = false
+    })
+    scoreDisplay.textContent = score
+    const appended = await grid.appendToEmpty()
+    console.log(appended)
     if (grid.checkGameOver()) {
+      console.log('GAME OVER')
       alert('GAME OVER')
-      controller.stop()
-    } else {
-      grid.cells.forEach((cell) => (cell.merged = false))
-      // controller.start()
+      return
     }
+    controller.start()
   }
 }
 
